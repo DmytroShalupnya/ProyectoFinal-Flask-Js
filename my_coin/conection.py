@@ -59,10 +59,7 @@ class ConexionApi(Session):
             raise ExternalApiError("La API externa tardó demasiado en responder")
         except requests.exceptions.RequestException as e:
             raise ExternalApiError(f"Error conectando con la API externa: {str(e)}")
-    def get_historic(self):
-        datos = self.get_first_100()
-        
-        pass
+   
 
 
 
