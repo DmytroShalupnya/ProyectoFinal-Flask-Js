@@ -1,5 +1,5 @@
 ## Antes de empezar
-# instalaciom
+# instalacion
 - Crea una base de datos sqlite tres y añade su path en la variable DATA_BASE en config.py 
 - Registrate en api.coinmarketcap.com para conseguir una api key e insertala en la variable API_KEY en config.py
 - crea un entorno virtual e instala los elementos necesarios desde requirements.txt.
@@ -143,3 +143,5 @@ Tablas principales (ver `data/create.sql`):
 
 Proyecto de práctica para aprendizaje de Flask, consumo de APIs y front-end básico con una sola vista.
 Creado Por Dmytro Shalupnya. Practica final de Keep coding!
+"# ProyectoFinal-Flask-Js" 
+"# ProyectoFinal-Flask-Js" 
