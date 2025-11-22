@@ -106,15 +106,6 @@ def show_status():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/prueba")
-def prueba():
-    db = ConexionBD()
-    answer = db.onStartWalletUpdate()
-
-    return jsonify({
-        "answer":answer
-
-    })   
 
     
     
