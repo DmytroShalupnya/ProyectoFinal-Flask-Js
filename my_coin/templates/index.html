@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap" rel="stylesheet">
+    <title>MyCoin</title>
+</head>
+
+<body class="navbar-degradada">
+    <header>
+        <nav class="navbar navbar-degradada" data-bs-theme="dark">
+            <div class="container-fluid">
+                <span class="navbar-brand mb-0 h1" style="font-size: xx-large;"><h1>myCoin.</h1></span>
+            </div>
+        </nav>
+    </header>
+    
+    <section class="container" style="padding-top: 5%;">
+        {% block content %}
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; width: 100%;">
+    
+    
+            <div class="tabla-contenedor" style="flex-basis: 75%; max-height: 70vh; overflow-y: auto;">
+                <table class="tabla-marco" id="movements_table" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date/Time:</th>
+                            <th scope="col">Coin From:</th>
+                            <th scope="col">Amount From:</th>
+                            <th scope="col">Coin To:</th>
+                            <th scope="col">Amount To:</th>
+                            <th scope="col">Price per Unit:</th>
+                        </tr>
+                    </thead>
+                   
+                </table>
+            </div>
+
+            <div class="container" style="width: 30%;">
+                <div class="row">
+                    <div style="flex-basis: 100%;">
+                        <ol class="list-group lista-marco">
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div style="font-weight: bold;">Invested:</div>
+                                    <p style="padding-left: 20px;" id="invested_info"></p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div style="font-weight: bold;">Recovered:</div>
+                                    <p style="padding-left: 20px;" id="recovered_info"></p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div style="font-weight: bold;">Purchase value:</div>
+                                    <p style="padding-left: 20px;" id="valor_compra_info"></p>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto" style="display: inline-block;">
+                                    <div style="font-weight: bold;">Wallet value:</div>
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <p id="wallet_value" style="margin-right: 10px; padding-left: 20px;"></p>
+                                        <p id="diference" style="display:inline-block; font-weight: bold;"></p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container text-center">    
+                    <button class="btn btn-primary boton-mycoin" style="margin-bottom: 8px; margin-top: 10px; width: 90%; padding-left: 5%; font-size: large; font-weight: bolder;" id="formBtn">+</button>
+                    </div>
+                    <form id="conversion_form" class="d-none" style="max-width:600px; margin:auto;">
+
+                        <div class="row">
+                
+                            <div class="row" style="display: flex; justify-content: space-between; gap: 20px; margin-bottom: 10px;">
+                                
+                                <div style="flex: 1; display: flex; flex-direction: column;">
+                                    <select style="font-weight: bold;" id="moneda_from_form" class="form-select dropdown-mycoin" style="width:100%;">
+                                        <option style="font-weight: bold;" value="" selected disabled>Your coins:</option>
+                                        <option style="font-weight: bold;" value="EUR">EUR</option>
+                                        {% for row in myCoins %}
+                                            <option style="font-weight: bold;" value="{{ row[0] }}" data-wallet="{{ row[1] }}">{{ row[0] }} - Wallet: {{ row[1] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    
+                                </div>
+                            </div>
+                            <div class="row"  style="display: flex; margin-bottom: 10px; width: 100%;">
+                                <input class="dropdown-mycoin" id="amount_from_form" type="text" placeholder="Amount" inputmode="decimal" style="margin-top:8px; width:65%; font-weight: bold; border-radius: 5px; margin-left: 10px; margin-right: 10px;" />
+                                <button type="button" class="btn btn-primary boton-mycoin" id="allInBtn" style="width: 25%; margin-left: 0;">All In</button>
+                            </div>
+                            <div class="row">
+                                <div style="flex: 1; display: flex; flex-direction: column;">
+                                    <select style="font-weight: bold;" id="moneda_to_form" class="form-select dropdown-mycoin" style="width:100%;">
+                                        <option style="font-weight: bold;" value="" selected disabled>Coin to:</option>
+                                        <option style="font-weight: bold;" value="EUR">EUR</option>
+                                        {% for row in aviableCoins %}
+                                        <option style="font-weight: bold;" value="{{ row }}">{{ row }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    
+                                </div>
+                            </div>
+                        <div class="row">
+                            <input id="amount_to" type="text" readonly style="margin-top:8px; display: none; width:100%;" >
+                        </div>
+                        <div class="row">
+                            <div style="text-align:center; margin-top:10px;">
+                                <button type="button" id="conversion_button" class="btn btn-primary boton-mycoin" id="price_btn">Get Price</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>    
+        <div class="modal fade " id="purchaseModal" tabindex="-1" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header tabla-marco">
+                        <h1 class="modal-title fs-5">Purchase Ticket</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="modal_close_btn2"></button>
+                    </div>
+                    <div class="modal-body tabla-marco">
+                        <div>
+                            <div>
+                                <h4 style="font-weight: bolder;">From:</h4>
+                                <h6 style="display: inline; font-weight: bold;">Coin From:</h6><p id="coin_from_modal" style="display: inline; margin-left:10px;"></p>
+                            </div>
+                            <div>
+                                <h6 style="display: inline; font-weight: bold;">Amount from:</h6><p id="amount_from_modal" style="display: inline; margin-left:10px;"></p>
+                            </div>    
+                        </div>
+                        <div>
+                            <div>
+                                <h4 style="font-weight: bolder;">To:</h4>
+                                <h6 style="display: inline; font-weight: bold;">Coin to:</h6><p id="coin_to_modal" style="display: inline; margin-left:10px;"></p>
+                            </div>
+                            <div>
+                                <h6 style="display: inline; font-weight: bold;">Amount to:</h6><p id="amount_to_modal" style="display: inline; margin-left:10px;"></p>
+                            </div>    
+                        </div>
+                    </div>
+                    <div class="modal-footer tabla-marco" >
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modal_close_btn">Close</button>
+                        <button type="button" class="btn btn-primary boton-mycoin" id="purchaseBtn">Purchase!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% endblock %}
+    
+    </section>
+                    
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+    <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body> 
+</html>

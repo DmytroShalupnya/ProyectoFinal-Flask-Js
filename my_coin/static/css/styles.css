@@ -1,0 +1,85 @@
+h1  {
+  font-family: "Momo Trust Display", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 75px;
+}
+
+
+
+.navbar-degradada {
+    background: linear-gradient(to left, #b0b0b0, #000000); 
+    color: white;
+}
+
+
+
+.tabla-contenedor {
+    background-color: #1b1b1b; 
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    overflow: hidden; 
+}
+
+
+.tabla-marco {
+    width: 100%;
+    color: silver;
+    background-color: #121212;
+    border-collapse: collapse; 
+}
+
+.tabla-marco th, .tabla-marco td {
+    border: 1px solid #333;
+    padding: 10px;
+}
+
+.tabla-marco th {
+    background-color: #222;
+    font-weight: bold;
+}
+
+.tabla-marco tr:nth-child(even) {
+    background-color: #181818;
+}
+
+.boton-mycoin {
+    background-color: silver;
+    color: #000000;
+    font-weight: bold;
+}
+
+.lista-marco {
+    background-color: #1b1b1b;           
+    color: silver;                         
+    padding: 7px 12px;                    
+    border-radius: 12px;                   
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);  
+    border: 1px solid #444;               
+    font-size: 1.1rem;                     
+    list-style-position: inside;          
+}
+
+.lista-marco li {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2); 
+    background-color: #423f3f;
+    color: silver;
+}
+
+.borde-chulo {
+    border-radius: 5px;
+
+}
+.dropdown-mycoin {
+  background-color: black;
+  color: silver;
+  font-weight: bold;
+}
+.boton-mycoin:disabled {
+    background-color: #000000;
+    color: silver;
+    
+
+}
