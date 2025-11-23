@@ -263,13 +263,12 @@ class Status():
         
         wallet = Decimal(self.current_wallet_value())
         valor_compra = Decimal(self.valor_compra())
-        if valor_compra/wallet > 0.999999 and valor_compra/wallet < 1:
-            diference = 0
-            return diference
+        
         try:
             diference = ((wallet - valor_compra) / valor_compra) * 100
         except Exception:
             diference = 0
+            return str(diference)
         return str(diference)
     
 
