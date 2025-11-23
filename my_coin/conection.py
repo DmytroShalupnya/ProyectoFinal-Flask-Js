@@ -209,13 +209,15 @@ class Status():
                     invested += Decimal(i[0])
                 if invested == None:
                     invested = 0
-                
-            return str(invested)
         except sqlite3.OperationalError as e:
             raise TransactionError(f"Error al calcular inversión: {str(e)}")
         except Exception as e:
             raise Exception(f"Error inesperado al calcular inversión: {str(e)}")
-        
+        finally:
+            return str(invested)
+                
+            
+
     def recovered(self):
         recoveredTotal = 0
         try:
@@ -228,26 +230,32 @@ class Status():
                 if recovered == None:
                     recoveredTotal = 0
                
-            return str(recoveredTotal)
+            
         except sqlite3.OperationalError as e:
             raise TransactionError(f"Error al calcular recuperado: {str(e)}")
         except Exception as e:
             raise Exception(f"Error inesperado al calcular recuperado: {str(e)}")
-    
+        finally:
+            return str(recoveredTotal)
+
     def valor_compra(self):
+        value = 0
         try:
             invertido = Decimal(self.invested())
             recuperado = Decimal(self.recovered())
             value = invertido - recuperado
             if value < 0:
                 value = 0
-            return value
+           
         except Exception as e:
             raise Exception(f"Error al calcular valor de compra: {str(e)}")
-    
+        finally:
+            return str(value)
+
     def current_wallet_value(self):
+        total_wallet_value = Decimal()
+        
         try:
-            total_wallet_value = Decimal()
             wallet_list = self.dataBase.get_wallet()
             
             for i in wallet_list:
@@ -255,12 +263,14 @@ class Status():
                     total_wallet_value += self.api.get_coin_price(i[0], i[1])
                 else:
                     continue
-            return str(total_wallet_value)
+            
         except Exception as e:
             raise Exception(f"Error al calcular valor total del wallet: {str(e)}")
+        finally:
+            return str(total_wallet_value)
 
     def diference(self):
-        
+        diference = 0
         wallet = Decimal(self.current_wallet_value())
         valor_compra = Decimal(self.valor_compra())
         try:
@@ -269,13 +279,15 @@ class Status():
                 return diference
         except Exception:
             diference = 0
-            return diference    
+                
         try:
             diference = ((wallet - valor_compra) / valor_compra) * 100
         except Exception:
             diference = 0
+          
+        finally:
             return str(diference)
-        return str(diference)
+        
     
 
 
